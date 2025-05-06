@@ -571,7 +571,7 @@ class GenericMultimodalSegmentationDataset(GenericMultimodalDataset):
                 that it can be processed by single-modal models. Concatenate in the order of provided modalities.
                 Works with image modalities only. Does not work with allow_missing_modalities. Defaults to False.
         """
-        assert label_data_root is not None, "label_data_root must be specified for segmentation tasks."
+        # assert label_data_root is not None, "label_data_root must be specified for segmentation tasks."
 
         super().__init__(
             data_root,
