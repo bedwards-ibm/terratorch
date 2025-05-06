@@ -491,7 +491,7 @@ class GenericMultimodalSegmentationDataset(GenericMultimodalDataset):
         self,
         data_root: Path,
         num_classes: int,
-        label_data_root: Path,
+        label_data_root: Path | str | list[Path | str] | None = None,
         image_grep: str | None = "*",
         label_grep: str | None = "*",
         split: Path | None = None,
