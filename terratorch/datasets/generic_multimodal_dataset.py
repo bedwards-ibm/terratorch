@@ -202,6 +202,7 @@ class GenericMultimodalDataset(NonGeoDataset, ABC):
             image_files = {}
             for m, m_paths in data_root.items():
                 image_files[m] = sorted(glob.glob(os.path.join(m_paths, image_grep[m])))
+            logger.info(f"Image files: {image_files}")
 
             if label_data_root is not None:
                 image_files["mask"] = sorted(glob.glob(os.path.join(label_data_root, label_grep)))
@@ -217,10 +218,11 @@ class GenericMultimodalDataset(NonGeoDataset, ABC):
                 valid_files = list(set([get_file_id(file) for file in np.concatenate(list(image_files.values()))]))
             else:
                 valid_files = [get_file_id(file) for file in image_files[self.modalities[0]]]
+            logger.info(f"Valid image files: {valid_files}")
 
         self.samples = []
         num_modalities = len(self.modalities) + int(label_data_root is not None)
-
+        logger.info(f"Number of modalities: {num_modalities}")
         # Check for parquet and csv files with modality data and read the file
 
         for m, m_path in data_root.items():
@@ -257,6 +259,7 @@ class GenericMultimodalDataset(NonGeoDataset, ABC):
                     file_path = os.path.join(m_path, file)
                     if os.path.exists(file_path):
                         sample[m] = file_path
+            
 
             if label_data_root is not None:
                 if isinstance(label_data_root, pd.DataFrame):
@@ -278,6 +281,7 @@ class GenericMultimodalDataset(NonGeoDataset, ABC):
 
             if len(sample) == num_modalities or allow_missing_modalities:
                 self.samples.append(sample)
+        logger.info(f"Samples: {self.samples}")
 
         self.rgb_modality = rgb_modality or self.modalities[0]
         self.rgb_indices = rgb_indices or [0, 1, 2]
