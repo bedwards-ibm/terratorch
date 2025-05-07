@@ -512,6 +512,7 @@ class GenericMultiModalDataModule(NonGeoDataModule):
             self.predict_dataset = self.dataset_class(
                 data_root=self.predict_root,
                 num_classes=self.num_classes,
+                image_grep=self.image_grep,
                 allow_substring_file_names=self.allow_substring_file_names,
                 dataset_bands=self.predict_dataset_bands,
                 output_bands=self.predict_output_bands,
